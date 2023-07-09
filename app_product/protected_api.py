@@ -2,14 +2,13 @@ import os
 
 from flask import Blueprint
 
-from middleware import require_token, require_permission
+from middleware import require_permission
 
 api = Blueprint('protected_api', __name__)
 HOST_NAME = os.environ.get('HOST_NAME')
 
 
 @api.get('/<product_id>/')
-@require_token
 @require_permission('product:view')
 def get_product(product_id):
     products = [

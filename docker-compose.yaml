@@ -2,7 +2,10 @@ version: '3.8'
 
 services:
   api_gateway:
-    image: nginx:1.25.1
+    image: nginx_gateway_image:latest
+    build: 
+      context: ./nginx/
+      dockerfile: Dockerfile
     container_name: api_gateway
     ports:
       - protocol: tcp
