@@ -1,8 +1,11 @@
+import os
+
 from flask import Blueprint
 
 from middleware import require_token, require_permission
 
 api = Blueprint('protected_api', __name__)
+HOST_NAME = os.environ.get('HOST_NAME')
 
 
 @api.get('/<product_id>/')
@@ -56,10 +59,12 @@ def get_product(product_id):
     if not matched_product:
         return {
             'message': 'Not Found',
-            'data':{}
+            'data':{},
+             'source':HOST_NAME
         }, 404
     
     return {
         'message':'OK',
-        'data':matched_product
+        'data':matched_product,
+        'source':HOST_NAME
     }, 200 

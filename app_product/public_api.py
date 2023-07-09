@@ -1,6 +1,9 @@
+import os
+
 from flask import Blueprint
 
 api = Blueprint('public_api', __name__)
+HOST_NAME = os.environ.get('HOST_NAME')
 
 @api.get('/all')
 def public_get_product():
@@ -22,5 +25,6 @@ def public_get_product():
                 'title': 'Infinix INBOOK',
                 'description': 'Infinix Inbook X1 Ci3 10th 8GB...'
 }
-        ]
+        ],
+         'source':HOST_NAME
     }, 200

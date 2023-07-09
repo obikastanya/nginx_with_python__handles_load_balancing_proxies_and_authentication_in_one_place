@@ -16,8 +16,35 @@ services:
       - api_gateway_net
     depends_on:
       - auth_service
-      - app_product_service
+      - app_product_service_1
+      - app_product_service_2
   
+  app_product_service_1:
+    image: app_product_image:latest
+    build: 
+      context: ./app_product/
+      dockerfile: Dockerfile
+    container_name: app_product_service_1
+    environment:
+      PYTHONUNBUFFERED: 1
+      HOST_NAME: app_product_service_1
+    networks:
+      - api_gateway_net
+    restart: always
+  
+  app_product_service_2:
+    image: app_product_image:latest
+    build: 
+      context: ./app_product/
+      dockerfile: Dockerfile
+    container_name: app_product_service_2
+    environment:
+      PYTHONUNBUFFERED: 1
+      HOST_NAME: app_product_service_2
+    networks:
+      - api_gateway_net
+    restart: always
+
   auth_service:
     image: auth_service_image:latest
     build:
@@ -29,18 +56,7 @@ services:
     networks:
       - api_gateway_net
 
-  app_product_service:
-    image: app_product_image:latest
-    build: 
-      context: ./app_product/
-      dockerfile: Dockerfile
-    container_name: app_product_service
-    environment:
-      PYTHONUNBUFFERED: 1
-    networks:
-      - api_gateway_net
-    restart: always
-
+  
 
 networks:
   api_gateway_net:
