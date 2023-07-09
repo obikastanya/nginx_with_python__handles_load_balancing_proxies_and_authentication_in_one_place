@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  api_gateway:
+    image: nginx:1.25.1
+    container_name: api_gateway
+    ports:
+      - protocol: tcp
+        target: 80
+        published: 8881
+    environment:
+      NGINX_PORT: 80
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
