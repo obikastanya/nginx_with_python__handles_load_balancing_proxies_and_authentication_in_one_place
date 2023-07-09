@@ -12,3 +12,37 @@ services:
       NGINX_PORT: 80
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    networks:
+      - api_gateway_net
+    depends_on:
+      - auth_service
+      - app_product_service
+  
+  auth_service:
+    image: auth_service_image:latest
+    build:
+      context: ./auth/
+      dockerfile: Dockerfile
+    container_name: auth_service
+    environment:
+      PYTHONUNBUFFERED: 1
+    networks:
+      - api_gateway_net
+
+  app_product_service:
+    image: app_product_image:latest
+    build: 
+      context: ./app_product/
+      dockerfile: Dockerfile
+    container_name: app_product_service
+    environment:
+      PYTHONUNBUFFERED: 1
+    networks:
+      - api_gateway_net
+    restart: always
+
+
+networks:
+  api_gateway_net:
+    name: api_gateway_net
+    driver: bridge
